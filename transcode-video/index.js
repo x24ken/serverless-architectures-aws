@@ -2,7 +2,7 @@
 
 var AWS = require('aws-sdk');
 
-var electricTranscoder = new AWS.ElasticTransCoder({
+var electricTranscoder = new AWS.ElasticTranscoder({
     region: 'us-east-1'
 });
 
@@ -17,7 +17,7 @@ exports.handler = function(event, context, callback){
     console.log('key:', key, sourceKey, outputKey);
     
     var params = {
-        PipelineId: '1526978147506-u0kd6y',
+        PipelineId: '1527151061750-mppihh',
         OutputKeyPrefix: outputKey + '/',
         Input: {
             Key: sourceKey
