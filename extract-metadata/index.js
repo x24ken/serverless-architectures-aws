@@ -3,6 +3,7 @@
 var AWS = require('aws-sdk');
 var exec = require('child_process').exec;
 var fs = require('fs');
+var path = require('path');
 
 process.env['PATH'] = process.env['PATH'] + ':' +
     process.env['LAMBDA_TASK_ROOT'];
@@ -30,7 +31,7 @@ function extractMetadata(sourceBucket, sourceKey, localFilename, callback){
     
     exec(cmd, function(error, stdout, stderr){
         if (error === null){
-            var metadataKey = sourceKey.split('.')[0] + '.json';
+            var metadataKey = path.dirname(sourceKey) + '/' + path.basename(sourceKey, path.extname(sourceKey)) + '.json';
             saveMetadataToS3(stdout, sourceBucket, metadataKey, callback);
         } else {
             console.log(stderr);
@@ -61,6 +62,8 @@ exports.handler = function(event, context, callback){
     
     var sourceBucket = message.Records[0].s3.bucket.name;
     var sourceKey = decodeURIComponent(message.Records[0].s3.object.key.replace(/\+/g, ' '));
+    
+   console.log('sourceBucket: ', sourceBucket, 'sourceKey:', sourceKey );
     
     saveFileToFilesystem(sourceBucket, sourceKey, callback);
 };
