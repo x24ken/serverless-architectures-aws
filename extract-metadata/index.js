@@ -11,7 +11,7 @@ process.env['PATH'] = process.env['PATH'] + ':' +
 var s3 = new AWS.S3();
 
 function saveMetadataToS3(body, bucket, key, callback){
-    console.log('Saving metadata to s3 ここから:' + 'buket:' + bucket + 'callback:' + callback);
+    console.log('Saving metadata to s3');
     
     s3.putObject({
         Bucket: bucket,
